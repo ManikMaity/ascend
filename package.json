@@ -1,0 +1,22 @@
+{
+  "name": "ascend",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:unit": "turbo run test:unit",
+    "test:component": "turbo run test:component",
+    "db:generate": "turbo run db:generate --filter=@ascend/db",
+    "verify:server": "bun scripts/verify-server.mjs",
+    "verify:expo": "bun scripts/verify-expo.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "bun@1.2.18"
+}

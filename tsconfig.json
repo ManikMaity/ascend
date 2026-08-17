@@ -1,0 +1,15 @@
+{
+  "extends": "./packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [],
+  "references": [
+    { "path": "apps/mobile" },
+    { "path": "apps/server" },
+    { "path": "packages/api" },
+    { "path": "packages/auth" },
+    { "path": "packages/db" },
+    { "path": "packages/validators" }
+  ]
+}

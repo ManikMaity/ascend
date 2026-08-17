@@ -1,0 +1,3 @@
+# Feature documentation lives here.
+# Each feature gets a subdirectory: docs/features/<feature-name>/
+# with plan.md (before implementation) and report.md (after).

@@ -1,0 +1,29 @@
+{
+  "name": "@ascend/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run"
+  },
+  "dependencies": {
+    "@ascend/api": "workspace:*",
+    "@ascend/auth": "workspace:*",
+    "@ascend/db": "workspace:*",
+    "@trpc/server": "^11.4.3",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@ascend/config": "workspace:*",
+    "@types/bun": "^1.2.18",
+    "@types/node": "^22.16.5",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

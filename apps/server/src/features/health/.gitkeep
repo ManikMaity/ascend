@@ -1,0 +1,2 @@
+// Server-side feature modules live here.
+// tRPC routers are defined in packages/api; this directory holds server-specific feature logic.

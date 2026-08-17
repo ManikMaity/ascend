@@ -1,0 +1,24 @@
+{
+  "name": "@ascend/auth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./server": "./src/server.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ascend/db": "workspace:*",
+    "better-auth": "^1.2.12"
+  },
+  "devDependencies": {
+    "@ascend/config": "workspace:*",
+    "@types/node": "^22.16.5",
+    "typescript": "^5.8.3"
+  }
+}
