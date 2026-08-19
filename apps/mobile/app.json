@@ -6,7 +6,6 @@
     "orientation": "portrait",
     "scheme": "ascend",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "web": {
       "bundler": "metro",
       "output": "static"
