@@ -3,15 +3,32 @@ import { appRouter } from "@ascend/api";
 import { auth } from "@ascend/auth/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-const PORT = Number(process.env.PORT ?? 3001);
+const PORT = Number(Bun.env.PORT ?? 3001);
+
+const ALLOWED_ORIGIN_PATTERNS = [
+  /^http:\/\/localhost(:\d+)?$/,
+  /^http:\/\/127\.0\.0\.1(:\d+)?$/,
+  /^http:\/\/192\.168\.\d+\.\d+(:\d+)?$/,
+  /^exp:\/\/.*/,
+];
+
+function isAllowedOrigin(origin: string): boolean {
+  return ALLOWED_ORIGIN_PATTERNS.some((pattern) => pattern.test(origin));
+}
 
 function corsHeaders(origin: string | null) {
-  return {
-    "Access-Control-Allow-Origin": "*",
+  const headers: Record<string, string> = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization, Cookie",
     "Access-Control-Allow-Credentials": "true",
+    Vary: "Origin",
   };
+
+  if (origin && isAllowedOrigin(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin;
+  }
+
+  return headers;
 }
 
 const server = Bun.serve({
@@ -51,7 +68,7 @@ const server = Bun.serve({
         endpoint: "/trpc",
         req: request,
         router: appRouter,
-        createContext: () => createContext(),
+        createContext: () => createContext({ req: request }),
       });
 
       const headers = new Headers(response.headers);

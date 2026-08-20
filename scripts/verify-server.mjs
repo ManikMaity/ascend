@@ -22,7 +22,7 @@ function killProcessTree(child) {
 const server = spawn("bun", ["src/index.ts"], {
   cwd: path.join(root, "apps/server"),
   env: {
-    ...process.env,
+    ...Bun.env,
     PORT: port,
     BETTER_AUTH_URL: baseUrl,
     BETTER_AUTH_SECRET: "test-secret",

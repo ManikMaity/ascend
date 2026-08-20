@@ -4,7 +4,7 @@ import { createContext } from "../../context";
 
 describe("healthRouter", () => {
   it("returns a healthy response", async () => {
-    const caller = healthRouter.createCaller(createContext());
+    const caller = healthRouter.createCaller(await createContext());
     const result = await caller.ping();
 
     expect(result.status).toBe("ok");

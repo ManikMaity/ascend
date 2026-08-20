@@ -280,19 +280,23 @@ Expo Router home screen. **Only imports and renders** `HealthStatus`. No busines
 
 ---
 
-## Authentication (Structural Only)
+## Authentication
 
-Auth is **connected** but there is **no login/signup UI**.
+Google-only sign-in is implemented end-to-end.
 
 | Piece | Location | Status |
 |-------|----------|--------|
-| Prisma auth models | `packages/db/prisma/schema.prisma` | User, Session, Account, Verification tables defined |
-| Better Auth server | `packages/auth/src/server.ts` | Email/password enabled, Prisma adapter |
-| Server mount | `apps/server/src/index.ts` | `/api/auth/*` → `auth.handler()` |
-| Mobile client | `apps/mobile/src/lib/auth-client.ts` | `authClient` ready to use |
-| Login UI | — | **Not built** |
+| Prisma auth models | `packages/db/prisma/schema.prisma` | User, Session, Account, Verification |
+| Better Auth server | `packages/auth/src/server.ts` | Google OAuth, Expo plugin, email/password disabled |
+| Server mount | `apps/server/src/index.ts` | `/api/auth/*` → `auth.handler()`, credential-safe CORS |
+| Mobile client | `apps/mobile/src/lib/auth-client.ts` | Expo SecureStore + `expoClient` plugin |
+| Sign-in UI | `apps/mobile/src/features/auth/` | Hero screen + Google CTA |
+| Protected routes | `apps/mobile/src/app/(app)/` | Session gate in `(app)/_layout.tsx` |
+| Protected API | `packages/api/src/trpc.ts` | `protectedProcedure`, `auth.me` |
 
-When you build auth UI later, you will call `authClient.signIn.email(...)` etc. from mobile feature components — not from `app/` routes directly.
+Sign-in is triggered from `SignInScreen` via `authClient.signIn.social({ provider: "google" })`. Route files only wire layouts and redirects.
+
+**Local setup:** `bun run db:up`, `bun run db:migrate`, set `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` in `.env`.
 
 ---
 
@@ -616,11 +620,9 @@ Run: `bun run test:component` or `bun --filter @ascend/mobile test`
 
 | Item | Status |
 |------|--------|
-| Login / signup UI | Auth wired, no screens |
-| Database migrations run | Schema exists, migrations not applied |
-| `protectedProcedure` / auth-gated tRPC | Only `publicProcedure` today |
+| Hunter profile / onboarding | Not started |
 | React Hook Form usage | Package installed, not used |
-| Product features (posts, users, etc.) | None |
+| Product features (posts, workouts, etc.) | None beyond auth |
 | E2E tests | Not set up |
 | CI/CD pipeline | Not configured |
 
@@ -633,6 +635,8 @@ Run: `bun run test:component` or `bun --filter @ascend/mobile test`
 ```bash
 bun install
 cp .env.example .env   # if first time
+bun run db:up          # start local Postgres (Docker)
+bun run db:migrate     # apply Prisma migrations
 bun run db:generate
 
 # Terminal 1

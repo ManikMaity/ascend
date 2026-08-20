@@ -38,7 +38,7 @@ function findAvailablePort(startPort = 19000) {
   });
 }
 
-const port = process.env.EXPO_VERIFY_PORT ?? String(await findAvailablePort());
+const port = Bun.env.EXPO_VERIFY_PORT ?? String(await findAvailablePort());
 
 const expo = spawn(
   "bun",
@@ -46,7 +46,7 @@ const expo = spawn(
   {
     cwd: path.join(root, "apps/mobile"),
     env: {
-      ...process.env,
+      ...Bun.env,
       CI: "true",
     },
     stdio: ["ignore", "pipe", "pipe"],

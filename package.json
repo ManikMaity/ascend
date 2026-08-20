@@ -11,6 +11,9 @@
     "test:unit": "turbo run test:unit",
     "test:component": "turbo run test:component",
     "db:generate": "turbo run db:generate --filter=@ascend/db",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "bun --filter @ascend/db db:migrate",
     "verify:server": "bun scripts/verify-server.mjs",
     "verify:expo": "bun scripts/verify-expo.mjs"
   },
@@ -21,6 +24,8 @@
   },
   "packageManager": "bun@1.2.18",
   "overrides": {
-    "@types/react": "~19.2.4"
+    "@types/react": "~19.2.4",
+    "better-auth": "1.7.1",
+    "@better-auth/expo": "1.7.1"
   }
 }

@@ -116,8 +116,9 @@ Prisma client with PostgreSQL. Schema includes Better Auth models (User, Session
 ### @ascend/auth
 
 Better Auth configuration:
-- Server: `packages/auth/src/server.ts` — Prisma adapter, email/password enabled
+- Server: `packages/auth/src/server.ts` — Google OAuth, Expo plugin, Prisma adapter
 - Client: `packages/auth/src/client.ts` — React auth client factory
+- Mobile: `apps/mobile/src/lib/auth-client.ts` — Expo SecureStore + cookie forwarding to tRPC
 
 ### @ascend/config
 
@@ -137,12 +138,15 @@ Shared TypeScript configs:
 
 ## Authentication Boundary
 
-Better Auth is structurally connected but has no UI in the foundation:
+Google-only sign-in via Better Auth + `@better-auth/expo`:
 
-- Server mounts auth handler with Prisma adapter
-- Mobile creates auth client pointing to server
-- Prisma schema includes auth tables
-- No login/signup screens yet
+- Server: `/api/auth/*` handler with Google OAuth, Expo plugin, session in PostgreSQL
+- Mobile: hero sign-in screen at `(auth)/sign-in`, session in SecureStore
+- Routes: `(app)/*` guarded by `authClient.useSession()`; unauthenticated users redirect to sign-in
+- API: `protectedProcedure` resolves session from request cookies; `auth.me` returns current user
+- tRPC mobile client forwards session cookies via `authClient.getCookie()`
+
+Local database: `docker compose up -d` + `bun run db:migrate`.
 
 ## Testing Strategy
 

@@ -4,7 +4,7 @@ import { createContext } from "@ascend/api";
 
 describe("server health", () => {
   it("exposes a health ping procedure", async () => {
-    const caller = appRouter.createCaller(createContext());
+    const caller = appRouter.createCaller(await createContext());
     const result = await caller.health.ping();
 
     expect(result.status).toBe("ok");

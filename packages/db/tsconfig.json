@@ -1,8 +1,7 @@
 {
   "extends": "@ascend/config/tsconfig.node.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src"
+    "outDir": "dist"
   },
-  "include": ["src"]
+  "include": ["src", "generated"]
 }

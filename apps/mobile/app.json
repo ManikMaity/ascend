@@ -10,7 +10,12 @@
       "bundler": "metro",
       "output": "static"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-image"
+    ],
     "android": {
       "usesCleartextTraffic": true
     },

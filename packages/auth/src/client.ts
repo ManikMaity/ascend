@@ -1,9 +1,11 @@
 import { createAuthClient } from "better-auth/react";
 
-export function createAscendAuthClient(baseURL: string) {
-  return createAuthClient({
-    baseURL,
-  });
+export { expoClient } from "@better-auth/expo/client";
+
+type CreateAuthClientOptions = NonNullable<Parameters<typeof createAuthClient>[0]>;
+
+export function createAscendAuthClient(options: CreateAuthClientOptions) {
+  return createAuthClient(options);
 }
 
 export type AscendAuthClient = ReturnType<typeof createAscendAuthClient>;

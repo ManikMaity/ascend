@@ -9,6 +9,8 @@ Primary rules for AI agents working in this repository. Keep this file under **1
 3. Keep changes **minimal and focused**. Do not over-engineer or add unrelated code.
 4. **Verify before claiming success**. Run relevant checks after changes.
 5. Do not implement product features unless explicitly requested.
+6. Check `.agents/skills/` for relevant skills and follow them when they apply.
+7. Approved plans are guides, not law — if something looks off, flag it and clarify with the user before proceeding.
 
 ## Repository Layout
 
