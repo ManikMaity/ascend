@@ -303,15 +303,18 @@ When you build auth UI later, you will call `authClient.signIn.email(...)` etc. 
 ```
 src/
   app/              # Expo Router ONLY — routes and layouts
+  components/       # Global design system UI (import via @/components)
   features/         # Feature modules (the real app logic)
     health/
-      components/   # UI components + *.test.tsx
+      components/   # Feature-scoped UI + *.test.tsx
       hooks/        # tRPC hooks (useQuery, useMutation)
-  lib/              # Shared setup (trpc, auth, providers, api url)
+  lib/              # Shared setup (trpc, auth, providers, tokens)
   stores/           # Zustand stores + *.test.ts
 ```
 
 **Rule:** `app/` files should import from `features/` and render. Do not put API calls or business logic in `app/`.
+
+For global UI (buttons, typography, workout cards, progress bars), use `@/components` — see [design-system.md](./design-system.md) and the [design system agent guide](./features/design-system/README.md).
 
 ### Server (`apps/server/src/`)
 

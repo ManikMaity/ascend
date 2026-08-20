@@ -62,6 +62,8 @@ Do not implement until the user reviews and approves the plan.
 
 Follow the approved plan. Match existing conventions in `AGENTS.md` and `docs/architecture.md`.
 
+For mobile UI, read [design-system.md](./design-system.md) and [features/design-system/README.md](./features/design-system/README.md) before implementing screens or components.
+
 Place code in the correct locations:
 
 - Mobile features: `apps/mobile/src/features/<name>/`
@@ -124,6 +126,7 @@ When adding a new feature, typically create:
 
 **Documentation**:
 - [ ] Update `docs/architecture.md` if architecture changes
+- [ ] For UI work, follow [design-system.md](./design-system.md) and the [design system agent guide](./features/design-system/README.md)
 
 ## Anti-Patterns
 

@@ -49,10 +49,24 @@ Managed with **Bun workspaces** and **Turborepo** for task orchestration.
 ```
 apps/mobile/src/
   app/           # Expo Router routes and layouts only
+  components/    # Global design system UI (import via @/components)
   features/      # Feature modules (components, hooks, logic)
-  lib/           # Shared utilities (tRPC, auth, providers)
+  lib/           # Shared utilities (tRPC, auth, providers, tokens)
   stores/        # Zustand stores
 ```
+
+### Design System
+
+Global UI tokens and components live outside feature modules:
+
+- **Tokens**: `lib/tokens/` (TS) + `tailwind.config.js` (NativeWind className)
+- **Components**: `src/components/` — `Screen`, `Text`, `Button`, `SurfaceCard`, `WorkoutCard`, `ProgressBar`, etc.
+- **Typography**: Barlow via `expo-font`; monospace for metrics (`lib/tokens/shape.ts`)
+- **Aesthetic**: System terminal HUD — sharp `r-4` corners, white primary CTAs, segmented progress, System blue accent
+- **Base styles**: `global.css` — canvas (`#1D1E1A`) defaults
+- **Dev showcase**: `app/design-system.tsx` (delete before production)
+
+See [design-system.md](./design-system.md) for token tables and [features/design-system/README.md](./features/design-system/README.md) for the full agent guide (iterations, do/don't, examples).
 
 ### Feature Module Pattern
 
@@ -138,7 +152,7 @@ Better Auth is structurally connected but has no UI in the foundation:
 | API routers | Vitest | `packages/api/src/features/*/router.test.ts` |
 | Server | Vitest | `apps/server/src/*.test.ts` |
 | Mobile stores | Vitest | `apps/mobile/src/stores/*.test.ts` |
-| Mobile components | Vitest + RNTL | `apps/mobile/src/features/**/*.test.tsx` |
+| Mobile components | Vitest + RNTL | `apps/mobile/src/features/**/*.test.tsx`, `apps/mobile/src/components/**/*.test.tsx` |
 
 No E2E testing infrastructure.
 

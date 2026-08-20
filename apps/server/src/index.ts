@@ -3,11 +3,11 @@ import { appRouter } from "@ascend/api";
 import { auth } from "@ascend/auth/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-const PORT = Number(process.env.PORT ?? 3000);
+const PORT = Number(process.env.PORT ?? 3001);
 
 function corsHeaders(origin: string | null) {
   return {
-    "Access-Control-Allow-Origin": origin ?? "*",
+    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Allow-Credentials": "true",

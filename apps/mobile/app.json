@@ -11,6 +11,9 @@
       "output": "static"
     },
     "plugins": ["expo-router"],
+    "android": {
+      "usesCleartextTraffic": true
+    },
     "experiments": {
       "typedRoutes": true
     }

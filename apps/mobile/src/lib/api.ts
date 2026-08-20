@@ -1,18 +1,55 @@
 import Constants from "expo-constants";
+import { Platform } from "react-native";
 
-export function getApiUrl() {
-  const envUrl = process.env.EXPO_PUBLIC_API_URL;
-  if (envUrl) return envUrl;
+const DEFAULT_PORT = 3001;
 
+function getDevHost(): string | null {
   const hostUri = Constants.expoConfig?.hostUri;
   if (hostUri) {
-    const host = hostUri.split(":")[0];
-    return `http://${host}:3000`;
+    return hostUri.split(":")[0] ?? null;
   }
 
-  return "http://localhost:3000";
+  const debuggerHost = Constants.expoGoConfig?.debuggerHost;
+  if (debuggerHost) {
+    return debuggerHost.split(":")[0] ?? null;
+  }
+
+  return null;
+}
+
+function isLoopbackHost(host: string): boolean {
+  return host === "localhost" || host === "127.0.0.1";
+}
+
+function resolveApiUrl(envUrl: string | undefined): string {
+  const devHost = getDevHost();
+
+  if (envUrl) {
+    try {
+      const parsed = new URL(envUrl);
+      const port = parsed.port || String(DEFAULT_PORT);
+
+      if (isLoopbackHost(parsed.hostname) && devHost && Platform.OS !== "web") {
+        return `${parsed.protocol}//${devHost}:${port}`;
+      }
+
+      return envUrl;
+    } catch {
+      return envUrl;
+    }
+  }
+
+  if (devHost) {
+    return `http://${devHost}:${DEFAULT_PORT}`;
+  }
+
+  return `http://localhost:${DEFAULT_PORT}`;
+}
+
+export function getApiUrl() {
+  return resolveApiUrl(process.env.EXPO_PUBLIC_API_URL);
 }
 
 export function getAuthUrl() {
-  return process.env.EXPO_PUBLIC_AUTH_URL ?? getApiUrl();
+  return resolveApiUrl(process.env.EXPO_PUBLIC_AUTH_URL);
 }
